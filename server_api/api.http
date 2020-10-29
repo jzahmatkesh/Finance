@@ -1,0 +1,10 @@
+POST  http://127.0.0.1:8080/Finance/api/User/Authenticate
+Content-Type: application/json
+
+{
+    "mobile": "09305105691",
+    "pass": "1"
+}
+
+
+###
