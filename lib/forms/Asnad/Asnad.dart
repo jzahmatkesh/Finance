@@ -1,3 +1,4 @@
+import 'package:finance/module/consts.dart';
 import 'package:finance/module/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,8 +51,8 @@ class _AsnadState extends State<Asnad> {
           children: [
             FormHeader(
               title: 'اسناد حسابداری', 
-              btnRight: MyIconButton(type: ButtonType.other, icon: Icon(CupertinoIcons.eyeglasses), hint: 'فیلتر اسناد', onPressed:()=> setState((){filter = !filter;})),
-              btnLeft: MyIconButton(type: ButtonType.none),
+              btnRight: MyIconButton(type: ButtonType.add, hint: 'سند جدید', onPressed: ()=>showFormAsDialog(context: context, form: NewSanad(sanad: Sanad(id: 0, reg: true)))),
+              btnLeft: MyIconButton(type: ButtonType.other, icon: Icon(CupertinoIcons.eyeglasses), hint: 'فیلتر اسناد', onPressed:()=> setState((){filter = !filter;})),
             ),
             filter  
               ? Padding(
@@ -153,4 +154,121 @@ class SanadRow extends StatelessWidget {
   }
 }
 
+class NewSanad extends StatelessWidget {
+  const NewSanad({Key key, @required this.sanad}) : super(key: key);
 
+  final Sanad sanad;
+
+  @override
+  Widget build(BuildContext context) {
+    var _eddate = TextEditingController(text: sanad.date);
+    return Container(
+      width: screenWidth(context) * 0.85,
+      padding: EdgeInsets.all(12),
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FormHeader(
+              title: "${sanad.id == 0 ? 'سند جدید' : 'ویرایش سند'}",
+              btnRight: MyIconButton(type: ButtonType.save, onPressed: (){}),
+              color: sanad.reg ? Colors.green.withOpacity(0.25) : null,
+            ),
+            Row(
+              children: [
+                Expanded(child: GridTextField(hint: 'شماره سند', initialValue: '${sanad.id}', onChange: (val)=>sanad.id = int.parse(val), numberonly: true, autofocus: true,)),
+                Expanded(child: GridTextField(hint: 'تاریخ سند', controller: _eddate, datepicker: true)),
+                SizedBox(width: 15),
+                Tooltip(message: 'ثبت سند', child: Switch(value: false, onChanged: (val){})),
+                Expanded(flex: 2, child: Container(),)
+              ],
+            ),
+            GridTextField(hint: 'شرح سند', initialValue: '${sanad.note ?? ''}', onChange: (val)=>sanad.note = val),
+            GridCaption(obj: ['عنوان کل', 'عنوان معین', 'تفصیلی یک', 'تفصیلی دو', 'تفصیلی سه', 'تفصیلی 4', 'تفصیلی 5', 'تفصیلی 6', 'بدهکار', 'بستانکار', 'توضیحات', '']),
+            MyRow(
+              children: [
+                Expanded(child: GridTextField(hint: 'کل', initialValue: '101', onChange: (val)=>print('kol: $val'))),
+                Expanded(child: GridTextField(hint: 'معین', initialValue: '10', onChange: (val)=>print('moin: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی یک', initialValue: '1001', onChange: (val)=>print('taf1: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی دو', initialValue: '0', onChange: (val)=>print('taf2: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی سه', initialValue: '0', onChange: (val)=>print('taf3: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی چهار', initialValue: '0', onChange: (val)=>print('taf4: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی پنج', initialValue: '0', onChange: (val)=>print('taf5: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی شش', initialValue: '0', onChange: (val)=>print('taf6: $val'))),
+                Expanded(child: GridTextField(hint: 'بدهکار', initialValue: '0', onChange: (val)=>print('bed: $val'))),
+                Expanded(child: GridTextField(hint: 'بستانکار', initialValue: '0', onChange: (val)=>print('bes: $val'))),
+                Expanded(flex: 2, child: GridTextField(hint: 'توضیحات', initialValue: 'ندارد', onChange: (val)=>print('note: $val'))),
+                MyIconButton(type: ButtonType.del, onPressed: (){})
+              ]
+            ),
+            MyRow(
+              children: [
+                Expanded(child: GridTextField(hint: 'کل', initialValue: '101', onChange: (val)=>print('kol: $val'))),
+                Expanded(child: GridTextField(hint: 'معین', initialValue: '10', onChange: (val)=>print('moin: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی یک', initialValue: '1001', onChange: (val)=>print('taf1: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی دو', initialValue: '0', onChange: (val)=>print('taf2: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی سه', initialValue: '0', onChange: (val)=>print('taf3: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی چهار', initialValue: '0', onChange: (val)=>print('taf4: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی پنج', initialValue: '0', onChange: (val)=>print('taf5: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی شش', initialValue: '0', onChange: (val)=>print('taf6: $val'))),
+                Expanded(child: GridTextField(hint: 'بدهکار', initialValue: '0', onChange: (val)=>print('bed: $val'))),
+                Expanded(child: GridTextField(hint: 'بستانکار', initialValue: '0', onChange: (val)=>print('bes: $val'))),
+                Expanded(flex: 2, child: GridTextField(hint: 'توضیحات', initialValue: 'ندارد', onChange: (val)=>print('note: $val'))),
+                MyIconButton(type: ButtonType.del, onPressed: (){})
+              ]
+            ),
+            MyRow(
+              children: [
+                Expanded(child: GridTextField(hint: 'کل', initialValue: '101', onChange: (val)=>print('kol: $val'))),
+                Expanded(child: GridTextField(hint: 'معین', initialValue: '10', onChange: (val)=>print('moin: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی یک', initialValue: '1001', onChange: (val)=>print('taf1: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی دو', initialValue: '0', onChange: (val)=>print('taf2: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی سه', initialValue: '0', onChange: (val)=>print('taf3: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی چهار', initialValue: '0', onChange: (val)=>print('taf4: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی پنج', initialValue: '0', onChange: (val)=>print('taf5: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی شش', initialValue: '0', onChange: (val)=>print('taf6: $val'))),
+                Expanded(child: GridTextField(hint: 'بدهکار', initialValue: '0', onChange: (val)=>print('bed: $val'))),
+                Expanded(child: GridTextField(hint: 'بستانکار', initialValue: '0', onChange: (val)=>print('bes: $val'))),
+                Expanded(flex: 2, child: GridTextField(hint: 'توضیحات', initialValue: 'ندارد', onChange: (val)=>print('note: $val'))),
+                MyIconButton(type: ButtonType.del, onPressed: (){})
+              ]
+            ),
+            MyRow(
+              children: [
+                Expanded(child: GridTextField(hint: 'کل', initialValue: '101', onChange: (val)=>print('kol: $val'))),
+                Expanded(child: GridTextField(hint: 'معین', initialValue: '10', onChange: (val)=>print('moin: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی یک', initialValue: '1001', onChange: (val)=>print('taf1: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی دو', initialValue: '0', onChange: (val)=>print('taf2: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی سه', initialValue: '0', onChange: (val)=>print('taf3: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی چهار', initialValue: '0', onChange: (val)=>print('taf4: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی پنج', initialValue: '0', onChange: (val)=>print('taf5: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی شش', initialValue: '0', onChange: (val)=>print('taf6: $val'))),
+                Expanded(child: GridTextField(hint: 'بدهکار', initialValue: '0', onChange: (val)=>print('bed: $val'))),
+                Expanded(child: GridTextField(hint: 'بستانکار', initialValue: '0', onChange: (val)=>print('bes: $val'))),
+                Expanded(flex: 2, child: GridTextField(hint: 'توضیحات', initialValue: 'ندارد', onChange: (val)=>print('note: $val'))),
+                MyIconButton(type: ButtonType.del, onPressed: (){})
+              ]
+            ),
+            MyRow(
+              children: [
+                Expanded(child: GridTextField(hint: 'کل', initialValue: '101', onChange: (val)=>print('kol: $val'))),
+                Expanded(child: GridTextField(hint: 'معین', initialValue: '10', onChange: (val)=>print('moin: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی یک', initialValue: '1001', onChange: (val)=>print('taf1: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی دو', initialValue: '0', onChange: (val)=>print('taf2: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی سه', initialValue: '0', onChange: (val)=>print('taf3: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی چهار', initialValue: '0', onChange: (val)=>print('taf4: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی پنج', initialValue: '0', onChange: (val)=>print('taf5: $val'))),
+                Expanded(child: GridTextField(hint: 'تفصیلی شش', initialValue: '0', onChange: (val)=>print('taf6: $val'))),
+                Expanded(child: GridTextField(hint: 'بدهکار', initialValue: '0', onChange: (val)=>print('bed: $val'))),
+                Expanded(child: GridTextField(hint: 'بستانکار', initialValue: '0', onChange: (val)=>print('bes: $val'))),
+                Expanded(flex: 2, child: GridTextField(hint: 'توضیحات', initialValue: 'ندارد', onChange: (val)=>print('note: $val'))),
+                MyIconButton(type: ButtonType.del, onPressed: (){})
+              ]
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

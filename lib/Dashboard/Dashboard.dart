@@ -1,3 +1,4 @@
+import 'package:finance/forms/Coding/Coding.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -76,7 +77,9 @@ class _DashboardState extends State<Dashboard> {
             SizedBox(width: 10.0),
             menuitem == 1
               ? Expanded(child: Asnad(user: widget.user))
-              : Text('hi')
+              : menuitem == 3
+                ? Expanded(child: FmCoding(user: widget.user))
+                : Text('hi')
           ],
         ),
       ),
